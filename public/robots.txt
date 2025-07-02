@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.dondolar.com.ar/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin
+Disallow: /login
