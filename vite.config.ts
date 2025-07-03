@@ -17,7 +17,21 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
-    open: true
+    open: true,
+    proxy: {
+      '/api-dolar': {
+        target: 'https://dolarapi.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-dolar/, ''),
+        secure: true
+      },
+      '/api-criptoya': {
+        target: 'https://criptoya.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-criptoya/, ''),
+        secure: true
+      }
+    }
   },
   preview: {
     port: 4173,
