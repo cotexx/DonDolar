@@ -11,6 +11,11 @@ const staticRoutes = [
     priority: 1.0
   },
   {
+    path: '/dolar-blue-hoy',
+    changefreq: 'hourly',
+    priority: 0.95
+  },
+  {
     path: '/noticias',
     changefreq: 'daily',
     priority: 0.9

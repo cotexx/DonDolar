@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, Moon, DollarSign, ChevronDown } from 'lucide-react';
-import CurrencyConverter from './CurrencyConverter';
+import { Sun, Moon, DollarSign } from 'lucide-react';
 
 interface Rate {
   compra: number;
@@ -16,7 +15,6 @@ interface NavbarProps {
 
 export default function Navbar({ darkMode, onDarkModeToggle }: NavbarProps) {
   const [rates, setRates] = useState<Rate[]>([]);
-  const [isToolsOpen, setIsToolsOpen] = useState(false);
 
   useEffect(() => {
     fetchRates();
@@ -66,27 +64,12 @@ export default function Navbar({ darkMode, onDarkModeToggle }: NavbarProps) {
 
           {/* Navigation Links */}
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
-            <div className="relative">
-              <button
-                onClick={() => setIsToolsOpen(!isToolsOpen)}
-                className="flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
-              >
-                Herramientas
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              
-              {isToolsOpen && (
-                <div className="absolute right-0 mt-2 w-screen max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 p-4">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      Conversor de Monedas
-                    </h3>
-                    <CurrencyConverter rates={rates} />
-                  </div>
-                </div>
-              )}
-            </div>
-            
+            <Link
+              to="/dolar-blue-hoy"
+              className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              Dólar Blue Hoy
+            </Link>
             <Link
               to="/noticias"
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"

@@ -6,6 +6,7 @@ import Legal from './pages/Legal.tsx';
 import Admin from './pages/Admin.tsx';
 import Login from './pages/Login.tsx';
 import News from './pages/News.tsx';
+import DolarBlueHoy from './pages/DolarBlueHoy.tsx';
 import NewsDetail from './pages/NewsDetail.tsx';
 import Crypto from './pages/Crypto.tsx';
 import CryptoDetail from './pages/CryptoDetail.tsx';
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/dolar-blue-hoy" element={<DolarBlueHoy />} />
         <Route path="/legal" element={<Legal />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />

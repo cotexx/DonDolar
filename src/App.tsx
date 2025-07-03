@@ -414,7 +414,19 @@ function App() {
           </div>
         ) : (
           <>
-            <div id="exchange-rates-section" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Sección Dólar blue hoy */}
+            <div id="dolar-blue-hoy-section" className="mb-12">
+              {/* Títulos principales de cotizaciones */}
+              <div id="main-titles-section" className="text-center mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                  Cotización dolar blue hoy y más...
+                </h1>
+                <h2 className="text-xl md:text-2xl text-blue-100 dark:text-gray-300 font-medium">
+                  Cotización actualizada minuto a minuto del dolar blue, oficial, cripto, blue, tarjeta, y más...
+                </h2>
+              </div>
+
+              <div id="exchange-rates-section" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {rates.map((rate) => (
                 <div
                   key={rate.casa}
@@ -475,6 +487,7 @@ function App() {
                   </div>
                 </div>
               ))}
+            </div>
             </div>
 
             <div id="currency-converter-section" className="mt-12 mb-12">

@@ -34,6 +34,7 @@ export default function Footer() {
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
+    { name: 'Dólar Blue Hoy', path: '/dolar-blue-hoy' },
     { name: 'Noticias', path: '/noticias' },
     { name: 'Crypto', path: '/crypto' },
     { name: 'Economía', path: '/economia' },
