@@ -11,7 +11,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { Helmet } from 'react-helmet';
 
 interface DolarRate {
   compra: number;
@@ -284,13 +283,7 @@ export default function DolarBlueHoy() {
   };
 
   return (
-    <>
-      <Helmet>
-        <link rel="canonical" href="https://www.dondolar.com.ar/dolar-blue-hoy" />
-        <title>Cotización Dólar Blue Hoy en Argentina | Don Dólar</title>
-        <meta name="description" content="Cotización actualizada minuto a minuto del dólar blue hoy, oficial, cripto, tarjeta y más. Descubre el precio del dólar blue en Argentina en tiempo real." />
-      </Helmet>
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navbar darkMode={darkMode} onDarkModeToggle={() => setDarkMode(!darkMode)} />
         
         <div className="container mx-auto px-4 py-12">
@@ -420,6 +413,5 @@ export default function DolarBlueHoy() {
         
         <Footer />
       </div>
-    </>
   );
 } 
