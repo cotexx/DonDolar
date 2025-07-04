@@ -11,6 +11,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { Helmet } from 'react-helmet';
 
 interface DolarRate {
   compra: number;
@@ -282,138 +283,143 @@ export default function DolarBlueHoy() {
     return variacion > 0 ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900';
   };
 
-
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <Navbar darkMode={darkMode} onDarkModeToggle={() => setDarkMode(!darkMode)} />
-      
-      <div className="container mx-auto px-4 py-12">
-        {/* Títulos principales */}
-        <div id="main-titles-section" className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Cotización dolar blue hoy y más...
-          </h1>
-          <h2 className="text-xl md:text-2xl text-blue-100 dark:text-gray-300 font-medium">
-            Cotización actualizada minuto a minuto del dolar blue, oficial, cripto, blue, tarjeta, y más...
-          </h2>
-        </div>
-
-        {/* Botón de actualización */}
-        <div id="update-button-section" className="flex flex-col items-center gap-2 mb-8">
-          <button
-            onClick={fetchRates}
-            disabled={isButtonDisabled || isRefreshing}
-            className={`flex items-center gap-2 px-6 py-3 bg-yellow-400 dark:bg-yellow-500 text-blue-900 dark:text-gray-900 rounded-full font-semibold hover:bg-yellow-300 dark:hover:bg-yellow-400 transition-all transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 ${
-              isRefreshing ? 'animate-pulse' : ''
-            }`}
-          >
-            <RefreshCw size={20} className={isRefreshing ? 'animate-spin' : ''} />
-            {isRefreshing ? 'Actualizando...' : 'Actualizar Cotizaciones'}
-          </button>
-          {isButtonDisabled && (
-            <div className="text-yellow-400 dark:text-yellow-500 text-sm font-medium">
-              Próxima actualización en: {formatTime(countdown)}
-            </div>
-          )}
-        </div>
-
-        {/* Mensaje de error */}
-        {error && (
-          <div id="error-alert-section" className="max-w-2xl mx-auto mb-8">
-            <div className="flex items-center gap-3 bg-red-100 dark:bg-red-900 border-l-4 border-red-500 text-red-700 dark:text-red-200 p-4 rounded">
-              <AlertCircle size={24} />
-              <p>{error}</p>
-            </div>
+    <>
+      <Helmet>
+        <link rel="canonical" href="https://www.dondolar.com.ar/dolar-blue-hoy" />
+        <title>Cotización Dólar Blue Hoy en Argentina | Don Dólar</title>
+        <meta name="description" content="Cotización actualizada minuto a minuto del dólar blue hoy, oficial, cripto, tarjeta y más. Descubre el precio del dólar blue en Argentina en tiempo real." />
+      </Helmet>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <Navbar darkMode={darkMode} onDarkModeToggle={() => setDarkMode(!darkMode)} />
+        
+        <div className="container mx-auto px-4 py-12">
+          {/* Títulos principales */}
+          <div id="main-titles-section" className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Cotización dolar blue hoy y más...
+            </h1>
+            <h2 className="text-xl md:text-2xl text-blue-100 dark:text-gray-300 font-medium">
+              Cotización actualizada minuto a minuto del dolar blue, oficial, cripto, blue, tarjeta, y más...
+            </h2>
           </div>
-        )}
 
-        {/* Loading */}
-        {loading ? (
-          <div id="loading-section" className="flex flex-col items-center justify-center h-64 gap-4">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent"></div>
-            <p className="text-blue-100 dark:text-gray-300">Cargando cotizaciones...</p>
+          {/* Botón de actualización */}
+          <div id="update-button-section" className="flex flex-col items-center gap-2 mb-8">
+            <button
+              onClick={fetchRates}
+              disabled={isButtonDisabled || isRefreshing}
+              className={`flex items-center gap-2 px-6 py-3 bg-yellow-400 dark:bg-yellow-500 text-blue-900 dark:text-gray-900 rounded-full font-semibold hover:bg-yellow-300 dark:hover:bg-yellow-400 transition-all transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 ${
+                isRefreshing ? 'animate-pulse' : ''
+              }`}
+            >
+              <RefreshCw size={20} className={isRefreshing ? 'animate-spin' : ''} />
+              {isRefreshing ? 'Actualizando...' : 'Actualizar Cotizaciones'}
+            </button>
+            {isButtonDisabled && (
+              <div className="text-yellow-400 dark:text-yellow-500 text-sm font-medium">
+                Próxima actualización en: {formatTime(countdown)}
+              </div>
+            )}
           </div>
-        ) : (
-          <>
-            {/* Tarjetas de cotizaciones */}
-            <div id="exchange-rates-section" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {rates.map((rate) => (
-                <div
-                  key={rate.casa}
-                  className="bg-white dark:bg-gray-800 backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      {getIconForRate(rate.nombre)}
-                      <h2 className="text-2xl font-bold text-blue-900 dark:text-white">{rate.nombre}</h2>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
-                        <span className="text-blue-800 dark:text-gray-200 font-medium">Compra</span>
-                        <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(rate.compra)}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
-                        <span className="text-blue-800 dark:text-gray-200 font-medium">Venta</span>
-                        <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(rate.venta)}</span>
-                      </div>
-                      {rate.variacion !== undefined && (
-                        <div className={`flex justify-between items-center p-3 rounded-lg ${getVariationColor(rate.variacion)}`}>
-                          <span className="text-blue-800 dark:text-gray-200 font-medium">Variación</span>
-                          <div className={`flex items-center ${rate.variacion > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                            {rate.variacion > 0 ? (
-                              <FaChartLine size={20} className="mr-1" />
-                            ) : (
-                              <FaArrowDown size={20} className="mr-1" />
-                            )}
-                            <span className="text-lg font-bold">{rate.variacion}%</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
 
-              {cryptoRates.map((crypto) => (
-                <div
-                  key={crypto.symbol}
-                  className="bg-white dark:bg-gray-800 backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      {crypto.icon}
-                      <h2 className="text-2xl font-bold text-blue-900 dark:text-white">{crypto.nombre}</h2>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
-                        <span className="text-blue-800 dark:text-gray-200 font-medium">Compra</span>
-                        <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(crypto.compraUSD, 'USD')}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
-                        <span className="text-blue-800 dark:text-gray-200 font-medium">Venta</span>
-                        <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(crypto.ventaUSD, 'USD')}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Última actualización */}
-            <div id="last-update-section" className="flex flex-col items-center gap-4 mt-12">
-              <div className="flex items-center gap-2 text-blue-100 dark:text-gray-300">
-                <Clock size={16} />
-                <p className="text-sm">
-                  Última actualización: <span className="font-semibold">{lastUpdate}</span>
-                </p>
+          {/* Mensaje de error */}
+          {error && (
+            <div id="error-alert-section" className="max-w-2xl mx-auto mb-8">
+              <div className="flex items-center gap-3 bg-red-100 dark:bg-red-900 border-l-4 border-red-500 text-red-700 dark:text-red-200 p-4 rounded">
+                <AlertCircle size={24} />
+                <p>{error}</p>
               </div>
             </div>
-          </>
-        )}
+          )}
+
+          {/* Loading */}
+          {loading ? (
+            <div id="loading-section" className="flex flex-col items-center justify-center h-64 gap-4">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent"></div>
+              <p className="text-blue-100 dark:text-gray-300">Cargando cotizaciones...</p>
+            </div>
+          ) : (
+            <>
+              {/* Tarjetas de cotizaciones */}
+              <div id="exchange-rates-section" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {rates.map((rate) => (
+                  <div
+                    key={rate.casa}
+                    className="bg-white dark:bg-gray-800 backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        {getIconForRate(rate.nombre)}
+                        <h2 className="text-2xl font-bold text-blue-900 dark:text-white">{rate.nombre}</h2>
+                      </div>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                          <span className="text-blue-800 dark:text-gray-200 font-medium">Compra</span>
+                          <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(rate.compra)}</span>
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                          <span className="text-blue-800 dark:text-gray-200 font-medium">Venta</span>
+                          <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(rate.venta)}</span>
+                        </div>
+                        {rate.variacion !== undefined && (
+                          <div className={`flex justify-between items-center p-3 rounded-lg ${getVariationColor(rate.variacion)}`}>
+                            <span className="text-blue-800 dark:text-gray-200 font-medium">Variación</span>
+                            <div className={`flex items-center ${rate.variacion > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                              {rate.variacion > 0 ? (
+                                <FaChartLine size={20} className="mr-1" />
+                              ) : (
+                                <FaArrowDown size={20} className="mr-1" />
+                              )}
+                              <span className="text-lg font-bold">{rate.variacion}%</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {cryptoRates.map((crypto) => (
+                  <div
+                    key={crypto.symbol}
+                    className="bg-white dark:bg-gray-800 backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        {crypto.icon}
+                        <h2 className="text-2xl font-bold text-blue-900 dark:text-white">{crypto.nombre}</h2>
+                      </div>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                          <span className="text-blue-800 dark:text-gray-200 font-medium">Compra</span>
+                          <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(crypto.compraUSD, 'USD')}</span>
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                          <span className="text-blue-800 dark:text-gray-200 font-medium">Venta</span>
+                          <span className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(crypto.ventaUSD, 'USD')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Última actualización */}
+              <div id="last-update-section" className="flex flex-col items-center gap-4 mt-12">
+                <div className="flex items-center gap-2 text-blue-100 dark:text-gray-300">
+                  <Clock size={16} />
+                  <p className="text-sm">
+                    Última actualización: <span className="font-semibold">{lastUpdate}</span>
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        
+        <Footer />
       </div>
-      
-      <Footer />
-    </div>
+    </>
   );
 } 
